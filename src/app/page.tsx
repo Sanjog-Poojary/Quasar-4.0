@@ -6,7 +6,7 @@ export default function Home() {
     <div className={styles.container}>
       <section className={styles.welcomeSection}>
         <h2 className={styles.welcomeTitle}>Welcome back, Mr. Anderson</h2>
-        <p className={styles.welcomeSubtitle}>Here's what's happening in your classroom today.</p>
+        <p className={styles.welcomeSubtitle}>Here&apos;s what&apos;s happening in your classroom today.</p>
       </section>
 
       <div className={styles.statsGrid}>

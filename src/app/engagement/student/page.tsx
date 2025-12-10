@@ -32,7 +32,7 @@ export default function StudentEngagementPage() {
 
       <div className={`${styles.pollCard} glass-card`}>
         <h4>Active Poll</h4>
-        <p className={styles.question}>How confident are you with Newton's Third Law?</p>
+        <p className={styles.question}>How confident are you with Newton&apos;s Third Law?</p>
         
         {!voted ? (
           <div className={styles.options}>

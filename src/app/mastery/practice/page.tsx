@@ -28,7 +28,7 @@ export default function PracticePage() {
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
-  const [streak, setStreak] = useState(2);
+  const [streak] = useState(2);
 
   const handleAnswer = (idx: number) => {
     setSelected(idx);

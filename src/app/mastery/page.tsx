@@ -89,7 +89,7 @@ export default function MasteryPage() {
             <div className={styles.recIcon}>🔥</div>
             <div className={styles.recContent}>
               <h4>Thermodynamics: Heat Transfer</h4>
-              <p>You're close to mastering this! Try 3 more problems.</p>
+              <p>You&apos;re close to mastering this! Try 3 more problems.</p>
             </div>
             <Link href="/mastery/practice">
               <button className={styles.practiceBtn}>Practice</button>

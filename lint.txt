@@ -1,0 +1,67 @@
+﻿
+> amep-platform@0.1.0 lint
+> eslint
+
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\engagement\page.tsx
+  133:37  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\engagement\page.tsx:133:37
+  131 |                 <div className={styles.optionLabel}>
+  132 |                   <span>{opt.label}</span>
+> 133 |                   <span>{Math.floor(Math.random() * 10)} votes</span> {/* Mock data */}
+      |                                     ^^^^^^^^^^^^^ Cannot call impure function
+  134 |                 </div>
+  135 |                 <div className={styles.progressBar}>
+  136 |                   <div className={styles.progressFill} style={{ width: `${Math.random() * 100}%` }} />  react-hooks/purity
+  136:75  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\engagement\page.tsx:136:75
+  134 |                 </div>
+  135 |                 <div className={styles.progressBar}>
+> 136 |                   <div className={styles.progressFill} style={{ width: `${Math.random() * 100}%` }} />
+      |                                                                           ^^^^^^^^^^^^^ Cannot call impure function
+  137 |                 </div>
+  138 |               </div>
+  139 |             ))}                                                                                        react-hooks/purity
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\engagement\student\page.tsx
+  35:73  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\mastery\page.tsx
+  92:21  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\mastery\practice\page.tsx
+  31:18  warning  'setStreak' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\page.tsx
+  9:51  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  9:58  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\app\projects\[id]\page.tsx
+  5:44  warning  'params' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\context\ThemeContext.tsx
+  19:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\Sanjog\Downloads\Quasar\amep-platform\src\context\ThemeContext.tsx:19:7
+  17 |     const savedTheme = localStorage.getItem('theme') as Theme;
+  18 |     if (savedTheme) {
+> 19 |       setTheme(savedTheme);
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  20 |       document.documentElement.setAttribute('data-theme', savedTheme);
+  21 |     } else {
+  22 |       document.documentElement.setAttribute('data-theme', 'dark');  react-hooks/set-state-in-effect
+
+Γ£û 9 problems (7 errors, 2 warnings)
+

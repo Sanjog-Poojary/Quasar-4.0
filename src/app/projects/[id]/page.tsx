@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import styles from './page.module.css';
 
-export default function ProjectWorkspace({ params }: { params: { id: string } }) {
+export default function ProjectWorkspace() {
   const [activeTab, setActiveTab] = useState('tasks');
 
   return (

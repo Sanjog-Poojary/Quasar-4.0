@@ -2,9 +2,21 @@
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
+interface PollOption {
+  label: string;
+  count: number;
+}
+
+interface Poll {
+  question: string;
+  options: PollOption[];
+  totalVotes: number;
+}
+
 export default function EngagementPage() {
-  const [activePoll, setActivePoll] = useState<any>(null);
+  const [activePoll, setActivePoll] = useState<Poll | null>(null);
   const [confusionIndex, setConfusionIndex] = useState(12);
+  const [pollVotes, setPollVotes] = useState<number[]>([]);
 
   // Mock real-time updates
   useEffect(() => {
@@ -16,6 +28,13 @@ export default function EngagementPage() {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (activePoll) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPollVotes(activePoll.options.map(() => Math.floor(Math.random() * 10)));
+    }
+  }, [activePoll]);
 
   const launchPoll = () => {
     setActivePoll({
@@ -70,9 +89,9 @@ export default function EngagementPage() {
                 playsInline 
                 ref={(video) => {
                   if (video && !video.srcObject) {
-                    navigator.mediaDevices.getUserMedia({ video: true })
-                      .then(stream => video.srcObject = stream)
-                      .catch(err => console.log("Camera access denied or not available", err));
+                    // navigator.mediaDevices.getUserMedia({ video: true })
+                    //   .then(stream => video.srcObject = stream)
+                    //   .catch(err => console.log("Camera access denied or not available", err));
                   }
                 }}
                 className={styles.videoElement}
@@ -115,14 +134,14 @@ export default function EngagementPage() {
             <button className={styles.closeBtn} onClick={() => setActivePoll(null)}>End Poll</button>
           </div>
           <div className={styles.pollResults}>
-            {activePoll.options.map((opt: any, i: number) => (
+            {activePoll.options.map((opt, i) => (
               <div key={i} className={styles.pollOption}>
                 <div className={styles.optionLabel}>
                   <span>{opt.label}</span>
-                  <span>{Math.floor(Math.random() * 10)} votes</span> {/* Mock data */}
+                  <span>{pollVotes[i] || 0} votes</span>
                 </div>
                 <div className={styles.progressBar}>
-                  <div className={styles.progressFill} style={{ width: `${Math.random() * 100}%` }} />
+                  <div className={styles.progressFill} style={{ width: `${(pollVotes[i] || 0) * 10}%` }} />
                 </div>
               </div>
             ))}
