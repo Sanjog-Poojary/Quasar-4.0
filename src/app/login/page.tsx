@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import styles from './page.module.css';
 import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -72,6 +73,10 @@ export default function LoginPage() {
           <p>Demo Credentials:</p>
           <p>Teacher: <code>teacher@amep.com</code> / <code>password123</code></p>
           <p>Student: <code>student@amep.com</code> / <code>password123</code></p>
+        </div>
+
+        <div style={{ marginTop: '24px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+          Don't have an account? <Link href="/signup" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>Sign Up</Link>
         </div>
       </div>
     </div>

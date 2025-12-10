@@ -12,7 +12,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !user && pathname !== '/login') {
+    if (!isLoading && !user && pathname !== '/login' && pathname !== '/signup') {
       router.push('/login');
     }
   }, [user, isLoading, pathname, router]);
@@ -21,7 +21,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
   }
 
-  if (pathname === '/login') {
+  if (pathname === '/login' || pathname === '/signup') {
     return <>{children}</>;
   }
 
