@@ -2,8 +2,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.css';
+import { useAuth } from '@/context/AuthContext';
 
-const navItems = [
+const teacherNavItems = [
   { label: 'Dashboard', href: '/', icon: '📊' },
   { label: 'Projects (PBL)', href: '/projects', icon: '🚀' },
   { label: 'Engagement', href: '/engagement', icon: '📡' },
@@ -11,8 +12,20 @@ const navItems = [
   { label: 'Settings', href: '/settings', icon: '⚙️' },
 ];
 
+const studentNavItems = [
+  { label: 'Dashboard', href: '/', icon: '🏠' },
+  { label: 'My Projects', href: '/projects', icon: '🚀' },
+  { label: 'My Progress', href: '/mastery', icon: '📈' },
+  { label: 'Settings', href: '/settings', icon: '⚙️' },
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
+  const { user, logout } = useAuth();
+
+  const navItems = user?.role === 'student' ? studentNavItems : teacherNavItems;
+
+  if (!user) return null;
 
   return (
     <aside className={styles.sidebar}>
@@ -32,18 +45,33 @@ export default function Sidebar() {
             >
               <span className={styles.icon}>{item.icon}</span>
               <span className={styles.label}>{item.label}</span>
-              {isActive && <div className={styles.activeIndicator} />}
             </Link>
           );
         })}
       </nav>
 
       <div className={styles.userProfile}>
-        <div className={styles.avatar}>T</div>
+        <div className={styles.avatar}>{user.avatar}</div>
         <div className={styles.userInfo}>
-          <div className={styles.userName}>Mr. Anderson</div>
-          <div className={styles.userRole}>Teacher</div>
+          <div className={styles.userName}>{user.name}</div>
+          <div className={styles.userRole}>
+            {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+          </div>
         </div>
+        <button 
+          onClick={logout}
+          style={{ 
+            marginLeft: 'auto', 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer',
+            fontSize: '16px',
+            color: 'var(--text-secondary)'
+          }}
+          title="Logout"
+        >
+          🚪
+        </button>
       </div>
     </aside>
   );

@@ -10,7 +10,7 @@ export default function SettingsPage() {
       <h2 className={styles.title}>Settings</h2>
       
       <div className={styles.grid}>
-        <div className={`${styles.card} glass-panel`}>
+        <div className={styles.card}>
           <h3>Appearance</h3>
           <div className={styles.settingItem}>
             <div className={styles.settingInfo}>
@@ -23,7 +23,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className={`${styles.card} glass-panel`}>
+        <div className={styles.card}>
           <h3>Profile</h3>
           <div className={styles.profileSection}>
             <div className={styles.avatar}>T</div>
@@ -35,7 +35,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        <div className={`${styles.card} glass-panel`}>
+        <div className={styles.card}>
           <h3>Notifications</h3>
           <div className={styles.settingItem}>
             <div className={styles.settingInfo}>

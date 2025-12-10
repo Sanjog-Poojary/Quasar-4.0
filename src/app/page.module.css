@@ -9,15 +9,14 @@
 }
 
 .welcomeTitle {
-  font-size: 32px;
+  font-size: 28px;
   margin-bottom: 8px;
-  background: linear-gradient(to right, #fff, #a5b4fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .welcomeSubtitle {
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 16px;
 }
 
@@ -28,20 +27,30 @@
 }
 
 .statCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   padding: 24px;
   display: flex;
   align-items: center;
   gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .statIcon {
-  width: 60px;
-  height: 60px;
-  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .statInfo {
@@ -50,24 +59,24 @@
 }
 
 .statLabel {
-  color: var(--text-dim);
+  color: var(--text-secondary);
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 4px;
 }
 
 .statValue {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  font-family: 'Outfit', sans-serif;
   color: var(--text-main);
   line-height: 1;
   margin-bottom: 4px;
 }
 
 .statTrend {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--success);
+  font-weight: 500;
 }
 
 .contentGrid {
@@ -77,6 +86,10 @@
 }
 
 .sectionCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   padding: 24px;
   min-height: 300px;
 }
@@ -89,8 +102,9 @@
 }
 
 .cardHeader h3 {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-main);
+  font-weight: 600;
 }
 
 .projectList,
@@ -105,27 +119,28 @@
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  background-color: var(--bg-body);
+  border-radius: var(--radius-md);
   border: 1px solid transparent;
   transition: all 0.2s;
   cursor: pointer;
 }
 
 .projectItem:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #e9ecef;
+  border-color: var(--border-color);
 }
 
 .projectIcon {
   width: 48px;
   height: 48px;
-  background: rgba(123, 97, 255, 0.1);
-  border-radius: 12px;
+  background-color: white;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  box-shadow: var(--shadow-sm);
 }
 
 .projectDetails {
@@ -136,20 +151,21 @@
   font-size: 16px;
   margin-bottom: 4px;
   color: var(--text-main);
+  font-weight: 600;
 }
 
 .projectDetails p {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--text-secondary);
 }
 
 .projectStatus {
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 500;
-  background: rgba(0, 224, 150, 0.15);
-  color: #00E096;
+  font-weight: 600;
+  background-color: rgba(40, 167, 69, 0.1);
+  color: var(--success);
 }
 
 .activityItem {
@@ -157,7 +173,7 @@
   align-items: flex-start;
   gap: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-light);
 }
 
 .activityItem:last-child {
@@ -167,19 +183,20 @@
 .avatar {
   width: 32px;
   height: 32px;
-  background: #7B61FF;
+  background-color: var(--primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 600;
+  color: white;
   flex-shrink: 0;
 }
 
 .activityItem p {
   font-size: 14px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   line-height: 1.4;
 }
 
@@ -190,7 +207,7 @@
 
 .time {
   font-size: 12px;
-  color: var(--text-dim);
+  color: var(--text-secondary);
   display: block;
   margin-top: 4px;
 }

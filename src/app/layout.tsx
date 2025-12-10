@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
+import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
   title: "AMEP - Adaptive Mastery & Engagement Platform",
@@ -17,23 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider>
-          <div style={{ display: 'flex', minHeight: '100vh' }}>
-            <Sidebar />
-            <main style={{ 
-              flex: 1, 
-              marginLeft: '280px', 
-              display: 'flex', 
-              flexDirection: 'column',
-              position: 'relative'
-            }}>
-              <Header title="Dashboard" />
-              <div style={{ padding: '0 40px 40px 40px' }}>
-                {children}
-              </div>
-            </main>
-          </div>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

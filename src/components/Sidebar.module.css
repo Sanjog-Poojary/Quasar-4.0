@@ -1,118 +1,108 @@
 .sidebar {
-    width: 280px;
+    width: 260px;
     height: 100vh;
-    background: rgba(15, 15, 35, 0.6);
-    backdrop-filter: blur(20px);
-    border-right: 1px solid var(--border-glass);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 24px 16px;
     position: fixed;
     left: 0;
     top: 0;
     z-index: 100;
+    box-shadow: var(--shadow-sm);
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
     padding: 0 12px;
 }
 
 .logoIcon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     color: white;
-    box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .logoText {
-    font-family: 'Outfit', sans-serif;
-    font-size: 24px;
+    font-family: var(--font-sans);
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(to right, #fff, #ccc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
 }
 
 .nav {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     flex: 1;
 }
 
 .navItem {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 14px 16px;
-    border-radius: 16px;
-    color: var(--text-muted);
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
     font-weight: 500;
-    transition: all 0.3s var(--ease-out);
-    position: relative;
-    overflow: hidden;
+    transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .navItem:hover {
-    background: var(--bg-glass-hover);
-    color: var(--text-main);
-    transform: translateX(4px);
+    background-color: var(--bg-body);
+    color: var(--primary);
 }
 
 .navItem.active {
-    background: linear-gradient(90deg, rgba(123, 97, 255, 0.15) 0%, rgba(123, 97, 255, 0) 100%);
-    color: white;
+    background-color: #e6f0ff;
+    /* Very light blue */
+    color: var(--primary);
 }
 
 .icon {
-    font-size: 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
 }
 
-.activeIndicator {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 24px;
-    background: var(--primary);
-    border-radius: 0 4px 4px 0;
-    box-shadow: 0 0 10px var(--primary);
+.label {
+    font-size: 15px;
 }
 
 .userProfile {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
-    background: var(--bg-glass);
-    border-radius: 16px;
-    border: 1px solid var(--border-glass);
+    padding: 12px;
+    border-top: 1px solid var(--border-color);
     margin-top: auto;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
-    background: var(--bg-surface);
+    width: 36px;
+    height: 36px;
+    background-color: var(--secondary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    border: 2px solid var(--border-glass);
+    color: white;
+    font-size: 14px;
 }
 
 .userInfo {
@@ -128,5 +118,5 @@
 
 .userRole {
     font-size: 12px;
-    color: var(--text-dim);
+    color: var(--text-secondary);
 }
