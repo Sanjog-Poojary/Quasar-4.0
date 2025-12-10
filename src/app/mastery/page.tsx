@@ -91,7 +91,9 @@ export default function MasteryPage() {
               <h4>Thermodynamics: Heat Transfer</h4>
               <p>You're close to mastering this! Try 3 more problems.</p>
             </div>
-            <button className={styles.practiceBtn}>Practice</button>
+            <Link href="/mastery/practice">
+              <button className={styles.practiceBtn}>Practice</button>
+            </Link>
           </div>
           <div className={styles.recCard}>
             <div className={styles.recIcon}>⚡</div>
@@ -99,7 +101,7 @@ export default function MasteryPage() {
               <h4>Energy Conservation: Potential Energy</h4>
               <p>Review the core concepts before moving to Kinetic Energy.</p>
             </div>
-            <button className={styles.practiceBtn}>Review</button>
+            <button className={styles.practiceBtn} onClick={() => alert("Review module coming soon")}>Review</button>
           </div>
         </div>
       </div>

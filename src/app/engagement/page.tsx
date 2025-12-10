@@ -60,25 +60,50 @@ export default function EngagementPage() {
           </div>
         </div>
 
-        <div className={`${styles.card} glass-panel`}>
-          <h3>Quick Actions</h3>
-          <div className={styles.actionGrid}>
-            <button className={styles.actionBtn} onClick={launchPoll}>
-              <span className={styles.btnIcon}>📊</span>
-              Launch Poll
-            </button>
-            <button className={styles.actionBtn}>
-              <span className={styles.btnIcon}>❓</span>
-              Check Understanding
-            </button>
-            <button className={styles.actionBtn}>
-              <span className={styles.btnIcon}>🧊</span>
-              Ice Breaker
-            </button>
-            <button className={styles.actionBtn}>
-              <span className={styles.btnIcon}>🛑</span>
-              Pause Session
-            </button>
+        <div className={styles.rightColumn}>
+          <div className={`${styles.card} glass-panel`}>
+            <h3>Live Classroom Feed</h3>
+            <div className={styles.cameraFeed}>
+              <video 
+                autoPlay 
+                muted 
+                playsInline 
+                ref={(video) => {
+                  if (video && !video.srcObject) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                      .then(stream => video.srcObject = stream)
+                      .catch(err => console.log("Camera access denied or not available", err));
+                  }
+                }}
+                className={styles.videoElement}
+              />
+              <div className={styles.overlay}>
+                <span className={styles.recBadge}>● REC</span>
+                <span className={styles.aiBadge}>AI Analysis Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div className={`${styles.card} glass-panel`}>
+            <h3>Quick Actions</h3>
+            <div className={styles.actionGrid}>
+              <button className={styles.actionBtn} onClick={launchPoll}>
+                <span className={styles.btnIcon}>📊</span>
+                Launch Poll
+              </button>
+              <button className={styles.actionBtn} onClick={() => alert("Feature coming soon: Check Understanding")}>
+                <span className={styles.btnIcon}>❓</span>
+                Check Understanding
+              </button>
+              <button className={styles.actionBtn} onClick={() => alert("Feature coming soon: Ice Breaker")}>
+                <span className={styles.btnIcon}>🧊</span>
+                Ice Breaker
+              </button>
+              <button className={styles.actionBtn} onClick={() => alert("Session Paused")}>
+                <span className={styles.btnIcon}>🛑</span>
+                Pause Session
+              </button>
+            </div>
           </div>
         </div>
       </div>

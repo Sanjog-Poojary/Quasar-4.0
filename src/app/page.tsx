@@ -1,4 +1,5 @@
 import styles from './page.module.css';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -41,7 +42,9 @@ export default function Home() {
         <div className={`${styles.sectionCard} glass-panel`}>
           <div className={styles.cardHeader}>
             <h3>Active Projects</h3>
-            <button className="btn-primary" style={{ padding: '8px 16px', fontSize: '14px' }}>+ New Project</button>
+            <Link href="/projects/new">
+              <button className="btn-primary" style={{ padding: '8px 16px', fontSize: '14px' }}>+ New Project</button>
+            </Link>
           </div>
           <div className={styles.projectList}>
             <div className={styles.projectItem}>

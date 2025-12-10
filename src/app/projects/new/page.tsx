@@ -76,8 +76,12 @@ export default function NewProjectPage() {
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.cancelBtn}>Cancel</button>
-        <button className="btn-primary">Launch Project</button>
+        <Link href="/projects">
+          <button className={styles.cancelBtn}>Cancel</button>
+        </Link>
+        <Link href="/projects/1">
+          <button className="btn-primary">Launch Project</button>
+        </Link>
       </div>
     </div>
   );

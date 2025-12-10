@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 const projectTemplates = [
@@ -75,7 +76,9 @@ export default function ProjectsPage() {
           <h2 className={styles.title}>Project Library</h2>
           <p className={styles.subtitle}>Select a template to launch a new PBL experience.</p>
         </div>
-        <button className="btn-primary">+ Create Custom Project</button>
+        <Link href="/projects/new">
+          <button className="btn-primary">+ Create Custom Project</button>
+        </Link>
       </div>
 
       <div className={styles.filters}>
@@ -108,7 +111,9 @@ export default function ProjectsPage() {
                 <span className={styles.metaItem}>🎓 {project.grade}</span>
               </div>
               
-              <button className={styles.useBtn}>Use Template</button>
+              <Link href={`/projects/new?template=${project.id}`} style={{ width: '100%' }}>
+                <button className={styles.useBtn}>Use Template</button>
+              </Link>
             </div>
           </div>
         ))}
