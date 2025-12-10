@@ -1,0 +1,236 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 32px;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+}
+
+.card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: var(--text-main);
+    margin-bottom: 24px;
+}
+
+.overviewCard {
+    align-items: center;
+}
+
+.circularProgress {
+    width: 180px;
+    margin-bottom: 32px;
+}
+
+.circularChart {
+    display: block;
+    margin: 10px auto;
+    max-width: 80%;
+    max-height: 250px;
+}
+
+.circleBg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 3.8;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    stroke: var(--primary);
+    animation: progress 1s ease-out forwards;
+}
+
+@keyframes progress {
+    0% {
+        stroke-dasharray: 0 100;
+    }
+}
+
+.percentage {
+    fill: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    font-weight: bold;
+    font-size: 0.5em;
+    text-anchor: middle;
+}
+
+.statsRow {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statVal {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.statLbl {
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.topicList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.topicItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.topicInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topicName {
+    font-size: 14px;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+.topicStatus {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.Mastered {
+    background: rgba(0, 224, 150, 0.15);
+    color: #00E096;
+}
+
+.Learning {
+    background: rgba(255, 185, 0, 0.15);
+    color: #FFB900;
+}
+
+.NeedsFocus {
+    background: rgba(255, 61, 113, 0.15);
+    color: #FF3D71;
+}
+
+.NotStarted {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dim);
+}
+
+.progressBar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.recommendations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.recCard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.2s;
+}
+
+.recCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+}
+
+.recIcon {
+    width: 40px;
+    height: 40px;
+    background: rgba(123, 97, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.recContent {
+    flex: 1;
+}
+
+.recContent h4 {
+    font-size: 15px;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.recContent p {
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.practiceBtn {
+    background: none;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.practiceBtn:hover {
+    background: var(--primary);
+    color: white;
+}
