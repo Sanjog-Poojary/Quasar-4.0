@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import User from '@/models/User';
+import { db } from '@/lib/firebase-admin';
 import bcrypt from 'bcryptjs';
+import { User } from '@/models/User';
 
 export async function POST(request: Request) {
     try {
@@ -11,13 +11,13 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
         }
 
-        await dbConnect();
+        const userDoc = await db.collection('users').doc(email).get();
 
-        const user = await User.findOne({ email });
-
-        if (!user) {
+        if (!userDoc.exists) {
             return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
         }
+
+        const user = userDoc.data() as User;
 
         const isMatch = await bcrypt.compare(password, user.password!);
 

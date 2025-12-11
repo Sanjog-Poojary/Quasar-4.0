@@ -1,23 +1,17 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import DashboardData from '@/models/DashboardData';
-import User from '@/models/User';
+import { db } from '@/lib/firebase-admin';
 import bcrypt from 'bcryptjs';
 
 export async function GET() {
-    console.log('MONGODB_URI:', process.env.MONGODB_URI);
-
     try {
-        await dbConnect();
+        // Clear existing data (optional, be careful in production)
+        // Firestore doesn't have a simple "delete collection" method for client SDKs, 
+        // but for seeding we can just overwrite or manually delete if needed.
+        // For simplicity in this seed script, we'll just overwrite specific docs.
 
-        // Clear existing data
-        await DashboardData.deleteMany({});
-        await User.deleteMany({});
-
-        // Create Users
         const hashedPassword = await bcrypt.hash('password123', 10);
 
-        await User.create([
+        const users = [
             {
                 email: 'teacher@amep.com',
                 password: hashedPassword,
@@ -60,10 +54,19 @@ export async function GET() {
                 role: 'student',
                 avatar: 'DT'
             }
-        ]);
+        ];
+
+        const batch = db.batch();
+
+        // Seed Users
+        for (const user of users) {
+            const userRef = db.collection('users').doc(user.email);
+            batch.set(userRef, user);
+        }
 
         // Seed Teacher Data
-        await DashboardData.create({
+        const teacherDataRef = db.collection('dashboardData').doc('teacher');
+        batch.set(teacherDataRef, {
             role: 'teacher',
             stats: [
                 { label: 'Class Mastery Rate', value: '78%', trend: '+5% from last week', icon: '📈', color: '#00E096', bgColor: 'rgba(0, 224, 150, 0.1)' },
@@ -90,7 +93,8 @@ export async function GET() {
         });
 
         // Seed Student Data
-        await DashboardData.create({
+        const studentDataRef = db.collection('dashboardData').doc('student');
+        batch.set(studentDataRef, {
             role: 'student',
             stats: [
                 { label: 'Assignments Due', value: 2, trend: 'Physics & Biology', icon: '📚', color: '#00E096', bgColor: 'rgba(0, 224, 150, 0.1)' },
@@ -107,7 +111,9 @@ export async function GET() {
             ]
         });
 
-        return NextResponse.json({ message: 'Database seeded successfully with Users' });
+        await batch.commit();
+
+        return NextResponse.json({ message: 'Database seeded successfully with Users and Dashboard Data' });
     } catch (error: any) {
         console.error('Seed Error:', error);
         return NextResponse.json({ error: 'Failed to seed database', details: error.message }, { status: 500 });

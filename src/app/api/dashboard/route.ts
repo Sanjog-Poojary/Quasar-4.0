@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import DashboardData from '@/models/DashboardData';
+import { db } from '@/lib/firebase-admin';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -10,16 +9,15 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Invalid or missing role parameter' }, { status: 400 });
     }
 
-    await dbConnect();
-
     try {
-        const data = await DashboardData.findOne({ role });
+        const dashboardRef = db.collection('dashboardData').doc(role);
+        const doc = await dashboardRef.get();
 
-        if (!data) {
+        if (!doc.exists) {
             return NextResponse.json({ error: 'Data not found for role' }, { status: 404 });
         }
 
-        return NextResponse.json(data);
+        return NextResponse.json(doc.data());
     } catch (error) {
         return NextResponse.json({ error: 'Internal Server Error', details: error }, { status: 500 });
     }

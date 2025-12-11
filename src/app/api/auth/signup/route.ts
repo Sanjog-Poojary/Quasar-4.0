@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import User from '@/models/User';
+import { db } from '@/lib/firebase-admin';
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
@@ -11,10 +10,10 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
         }
 
-        await dbConnect();
+        const userRef = db.collection('users').doc(email);
+        const userDoc = await userRef.get();
 
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+        if (userDoc.exists) {
             return NextResponse.json({ error: 'User already exists' }, { status: 400 });
         }
 
@@ -28,7 +27,7 @@ export async function POST(request: Request) {
             .toUpperCase()
             .slice(0, 2);
 
-        await User.create({
+        await userRef.set({
             name,
             email,
             password: hashedPassword,
