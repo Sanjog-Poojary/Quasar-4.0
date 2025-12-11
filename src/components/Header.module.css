@@ -5,6 +5,10 @@
     justify-content: space-between;
     padding: 0 32px;
     position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-body);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .searchBar {
@@ -61,4 +65,50 @@
 .iconBtn:hover {
     background: var(--bg-body);
     color: var(--primary);
+}
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menuBtn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: var(--radius-md);
+}
+
+.menuBtn:hover {
+    background: var(--bg-body);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .searchBar {
+        display: none;
+    }
+
+    .header {
+        padding: 0 16px;
+    }
 }
