@@ -47,20 +47,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           {children}
         </div>
       </main>
-      <style jsx global>{`
-        .main-content {
-          margin-left: 260px;
-          transition: margin-left 0.3s ease;
-        }
-        @media (max-width: 768px) {
-          .main-content {
-            margin-left: 0 !important;
-          }
-          .content-padding {
-            padding: 16px !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

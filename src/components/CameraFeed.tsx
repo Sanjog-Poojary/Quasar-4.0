@@ -74,30 +74,41 @@ export default function CameraFeed() {
     if (isActive && videoRef.current && canvasRef.current) {
       interval = setInterval(async () => {
         if (videoRef.current && videoRef.current.readyState === 4) {
-          const detections = await faceapi.detectAllFaces(
-            videoRef.current, 
-            new faceapi.TinyFaceDetectorOptions()
-          ).withFaceLandmarks(true).withFaceExpressions();
+          try {
+            // Use lighter options for mobile
+            const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.3 });
+            
+            const detections = await faceapi.detectAllFaces(
+              videoRef.current, 
+              options
+            ).withFaceLandmarks(true).withFaceExpressions();
 
-          if (detections.length > 0) {
-            const detection = detections[0];
-            const expressions = detection.expressions;
-            
-            // Determine dominant mood
-            const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
-            const dominant = sorted[0];
-            
-            // Calculate Focus (based on neutral expression and detection confidence)
-            const focusScore = Math.min(100, Math.round((expressions.neutral + detection.detection.score) * 50));
-            
-            // Calculate Clarity (based on detection score)
-            const clarityScore = Math.min(100, Math.round(detection.detection.score * 100));
+            if (detections.length > 0) {
+              const detection = detections[0];
+              const expressions = detection.expressions;
+              
+              // Determine dominant mood
+              const sorted = Object.entries(expressions).sort((a, b) => b[1] - a[1]);
+              const dominant = sorted[0];
+              
+              // Calculate Focus (based on neutral expression and detection confidence)
+              const focusScore = Math.min(100, Math.round((expressions.neutral + detection.detection.score) * 50));
+              
+              // Calculate Clarity (based on detection score)
+              const clarityScore = Math.min(100, Math.round(detection.detection.score * 100));
 
-            setMetrics({
-              mood: dominant[0].charAt(0).toUpperCase() + dominant[0].slice(1),
-              focus: focusScore,
-              clarity: clarityScore
-            });
+              setMetrics({
+                mood: dominant[0].charAt(0).toUpperCase() + dominant[0].slice(1),
+                focus: focusScore,
+                clarity: clarityScore
+              });
+              setError(""); // Clear error if successful
+            } else {
+              // No faces detected - optional: could set a status
+              // console.log("No faces detected");
+            }
+          } catch (err) {
+            console.error("Detection error:", err);
           }
         }
       }, 500); // Run every 500ms to save performance
