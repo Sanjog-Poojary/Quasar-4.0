@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/firebase-admin';
+import { db, auth } from '@/lib/firebase-admin';
 import bcrypt from 'bcryptjs';
 
 export async function GET() {
+    console.log('Starting seed process...');
     try {
         // Clear existing data (optional, be careful in production)
         // Firestore doesn't have a simple "delete collection" method for client SDKs, 
@@ -10,6 +11,7 @@ export async function GET() {
         // For simplicity in this seed script, we'll just overwrite specific docs.
 
         const hashedPassword = await bcrypt.hash('password123', 10);
+        console.log('Password hashed.');
 
         const users = [
             {
@@ -59,9 +61,40 @@ export async function GET() {
         const batch = db.batch();
 
         // Seed Users
+        console.log('Seeding users...');
         for (const user of users) {
+            console.log(`Processing user: ${user.email}`);
+            // 1. Create in Firestore
             const userRef = db.collection('users').doc(user.email);
-            batch.set(userRef, user);
+            await userRef.set({
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                avatar: user.avatar,
+                uid: user.email // Temporary UID for seed data, will be updated if Auth user is created
+            });
+
+            // 2. Create in Firebase Authentication
+            try {
+                // Check if user exists
+                try {
+                    await auth.getUserByEmail(user.email);
+                    console.log(`User ${user.email} already exists in Auth.`);
+                } catch (e) {
+                    // User doesn't exist, create them
+                    const userRecord = await auth.createUser({
+                        email: user.email,
+                        password: 'password123', // Default password for all seed users
+                        displayName: user.name,
+                    });
+                    console.log(`Created Auth user: ${user.email}`);
+
+                    // Update Firestore with real UID
+                    await userRef.update({ uid: userRecord.uid });
+                }
+            } catch (authError) {
+                console.error(`Failed to create auth user for ${user.email}:`, authError);
+            }
         }
 
         // Seed Teacher Data
@@ -84,11 +117,15 @@ export async function GET() {
             ],
             projects: [
                 { title: 'Mars Colony Design', subtitle: 'Physics • Grade 10 • Due in 3 days', status: 'In Progress', icon: '🚀' },
-                { title: 'Sustainable City', subtitle: 'Biology • Grade 9 • Starting next week', status: 'Planned', icon: '🌱', statusColor: '#6c757d', statusBg: 'rgba(108, 117, 125, 0.1)' }
+                { title: 'Sustainable City', subtitle: 'Biology • Grade 9 • Starting next week', status: 'Planned', icon: '🌱', statusColor: '#6c757d', statusBg: 'rgba(108, 117, 125, 0.1)' },
+                { title: 'AI Ethics Debate', subtitle: 'Computer Science • Grade 11 • Active', status: 'In Progress', icon: '🤖', statusColor: '#0095FF', statusBg: 'rgba(0, 149, 255, 0.1)' },
+                { title: 'History of Mathematics', subtitle: 'Math • Grade 10 • Completed', status: 'Completed', icon: '📜', statusColor: '#28a745', statusBg: 'rgba(40, 167, 69, 0.1)' }
             ],
             activity: [
                 { user: 'John Smith', action: 'submitted Milestone 2', time: '2 mins ago', avatar: 'JS' },
-                { user: 'Ada Lovelace', action: 'flagged a Confusion', time: '15 mins ago', avatar: 'AL', avatarBg: '#FF3D71' }
+                { user: 'Ada Lovelace', action: 'flagged a Confusion', time: '15 mins ago', avatar: 'AL', avatarBg: '#FF3D71' },
+                { user: 'Grace Hopper', action: 'completed the quiz', time: '1 hour ago', avatar: 'GH', avatarBg: '#00E096' },
+                { user: 'Alan Turing', action: 'started a new project', time: '3 hours ago', avatar: 'AT', avatarBg: '#0095FF' }
             ]
         });
 
@@ -97,17 +134,20 @@ export async function GET() {
         batch.set(studentDataRef, {
             role: 'student',
             stats: [
-                { label: 'Assignments Due', value: 2, trend: 'Physics & Biology', icon: '📚', color: '#00E096', bgColor: 'rgba(0, 224, 150, 0.1)' },
+                { label: 'Assignments Due', value: 4, trend: 'Physics, Biology & CS', icon: '📚', color: '#00E096', bgColor: 'rgba(0, 224, 150, 0.1)' },
                 { label: 'Current Grade', value: 'A-', trend: 'Top 10% of class', icon: '⭐', color: '#0095FF', bgColor: 'rgba(0, 149, 255, 0.1)' },
                 { label: 'Attendance', value: '98%', trend: 'Excellent', icon: '📅', color: '#FFB900', bgColor: 'rgba(255, 185, 0, 0.1)' }
             ],
             projects: [
                 { title: 'Mars Colony Design', subtitle: 'Physics • Due in 3 days', status: 'In Progress', icon: '🚀' },
-                { title: 'Sustainable City', subtitle: 'Biology • Starting next week', status: 'Upcoming', icon: '🌱', statusColor: '#6c757d', statusBg: 'rgba(108, 117, 125, 0.1)' }
+                { title: 'Sustainable City', subtitle: 'Biology • Starting next week', status: 'Upcoming', icon: '🌱', statusColor: '#6c757d', statusBg: 'rgba(108, 117, 125, 0.1)' },
+                { title: 'AI Ethics Essay', subtitle: 'Computer Science • Due tomorrow', status: 'Urgent', icon: '📝', statusColor: '#FF3D71', statusBg: 'rgba(255, 61, 113, 0.1)' },
+                { title: 'Calculus Problem Set', subtitle: 'Math • Completed', status: 'Submitted', icon: '➗', statusColor: '#28a745', statusBg: 'rgba(40, 167, 69, 0.1)' }
             ],
             activity: [
                 { user: 'Mr. Anderson', action: 'commented on Milestone 1', time: '2 hours ago', avatar: 'T' },
-                { user: 'System', action: 'Mastery Level Up!', time: 'Yesterday', avatar: 'S', avatarBg: '#28a745' }
+                { user: 'System', action: 'Mastery Level Up!', time: 'Yesterday', avatar: 'S', avatarBg: '#28a745' },
+                { user: 'Ms. Johnson', action: 'graded your Biology quiz', time: '2 days ago', avatar: 'J', avatarBg: '#FFB900' }
             ]
         });
 

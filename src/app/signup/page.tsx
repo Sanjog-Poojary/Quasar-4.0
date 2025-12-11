@@ -23,20 +23,32 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+      // 1. Create Auth User
+      const { createUserWithEmailAndPassword } = await import('firebase/auth');
+      const { auth, db } = await import('@/lib/firebase');
+      const { doc, setDoc } = await import('firebase/firestore');
+
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const user = userCredential.user;
+
+      // 2. Generate initials for avatar
+      const initials = formData.name
+        .split(' ')
+        .map((n: string) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+
+      // 3. Create User Profile in Firestore
+      // Using email as ID for easier lookup, or use user.uid
+      await setDoc(doc(db, 'users', formData.email), {
+        uid: user.uid,
+        name: formData.name,
+        email: formData.email,
+        role: formData.role,
+        avatar: initials
       });
 
-      const data = await res.json();
-      console.log("Response:", data);
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Signup failed');
-      }
-
-      // Redirect to login on success
       console.log("Signup success, redirecting...");
       alert("Account created! Redirecting to login...");
       router.push('/login');

@@ -21,6 +21,9 @@ export default function StudentDashboard() {
         if (res.ok) {
           const json = await res.json();
           setData(json);
+        } else {
+          const errorText = await res.text();
+          console.error('Dashboard API Error:', res.status, errorText);
         }
       } catch (error) {
         console.error('Failed to fetch dashboard data', error);

@@ -4,9 +4,11 @@ import { useState } from 'react';
 import styles from './page.module.css';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const router = useRouter();
+  const { logout } = useAuth(); // login is no longer exposed from context
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -18,9 +20,15 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await login(email, password);
+      const { signInWithEmailAndPassword } = await import('firebase/auth');
+      const { auth } = await import('@/lib/firebase');
+      
+      await signInWithEmailAndPassword(auth, email, password);
+      // AuthContext will handle the state update and redirect
+      router.push('/');
     } catch (err: any) {
-      setError(err.message || 'Login failed');
+      console.error("Login error:", err);
+      setError('Invalid email or password');
     } finally {
       setLoading(false);
     }
