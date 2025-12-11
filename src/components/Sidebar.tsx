@@ -19,7 +19,7 @@ const studentNavItems = [
   { label: 'Settings', href: '/settings', icon: '⚙️' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
   const { user, logout } = useAuth();
 
@@ -28,7 +28,12 @@ export default function Sidebar() {
   if (!user) return null;
 
   return (
-    <aside className={styles.sidebar}>
+    <>
+      <div 
+        className={`${styles.overlay} ${isOpen ? styles.open : ''}`} 
+        onClick={onClose}
+      />
+      <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
       <div className={styles.logo}>
         <div className={styles.logoIcon}>A</div>
         <span className={styles.logoText}>AMEP</span>
@@ -74,5 +79,6 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   );
 }

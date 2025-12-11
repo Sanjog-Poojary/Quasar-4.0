@@ -11,6 +11,35 @@
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+}
+
+@media (max-width: 768px) {
+    .overlay.open {
+        display: block;
+    }
 }
 
 .logo {

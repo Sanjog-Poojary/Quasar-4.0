@@ -2,12 +2,17 @@
 import styles from './Header.module.css';
 import { useTheme } from '@/context/ThemeContext';
 
-export default function Header({ title }: { title: string }) {
+export default function Header({ title, onMenuClick }: { title: string; onMenuClick?: () => void }) {
   const { theme, toggleTheme } = useTheme();
 
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>{title}</h1>
+      <div className={styles.leftSection}>
+        <button className={styles.menuBtn} onClick={onMenuClick}>
+          ☰
+        </button>
+        <h1 className={styles.title}>{title}</h1>
+      </div>
       <div className={styles.actions}>
         <div className={styles.searchBar}>
           <span className={styles.searchIcon}>🔍</span>

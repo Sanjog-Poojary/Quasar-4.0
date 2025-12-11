@@ -211,3 +211,17 @@
   display: block;
   margin-top: 4px;
 }
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    gap: 24px;
+  }
+}
